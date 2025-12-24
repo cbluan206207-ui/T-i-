@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Noel 🎄 Sweet Memory</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Great+Vibes&display=swap" rel="stylesheet">
+
+<style>
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  background: url("assets/bg.jpg") center/cover no-repeat;
+  overflow: hidden;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* 🎵 NÚT NHẠC */
+#musicBtn {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  padding: 8px 16px;
+  background: linear-gradient(45deg, gold, orange);
+  border: none;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 100;
+}
+
+/* ✨ CHỮ */
+.textBox {
+  position: fixed;
+  top: 8%;
+  width: 100%;
+  text-align: center;
+  z-index: 10;
+}
+
+#line1 span {
+  opacity: 0;
+  animation: fadeIn 0.5s forwards;
+  color: #fff;
+  text-shadow: 0 0 6px #000, 0 0 12px gold;
+}
+
+#line2 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 54px;
+  margin-top: 10px;
+  color: #ffe4f2;
+  text-shadow: 0 0 6px #000, 0 0 15px #ff69b4;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+/* 🦌 TUẦN LỘC */
+.sleigh {
+  position: fixed;
+  top: 5%;
+  left: -420px;
+  width: 360px;
+  animation: flySleigh 14s linear infinite;
+  z-index: 6;
+}
+
+@keyframes flySleigh {
+  from { left: -420px; }
+  to { left: 110%; }
+}
+
+/* 🎄 CÂY THÔNG (ẢNH – RÕ – PHÁT SÁNG) */
+#treeWrap {
+  position: fixed;
+  top: 58%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 320px;
+  z-index: 6;
+  text-align: center;
+}
+
+.tree-img {
+  width: 100%;
+  image-rendering: auto;
+  filter:
+    brightness(1.08)
+    contrast(1.12)
+    saturate(1.15)
+    drop-shadow(0 0 14px rgba(255,215,120,0.9))
+    drop-shadow(0 0 30px rgba(255,255,255,0.6));
+  animation: glowOnly 2.2s infinite alternate;
+}
+
+/* ✨ CHỈ PHÁT SÁNG – KHÔNG NHÚN */
+@keyframes glowOnly {
+  from {
+    filter:
+      brightness(1.05)
+      contrast(1.1)
+      saturate(1.12)
+      drop-shadow(0 0 10px rgba(255,215,120,0.8))
+      drop-shadow(0 0 22px rgba(255,255,255,0.5));
+  }
+  to {
+    filter:
+      brightness(1.12)
+      contrast(1.18)
+      saturate(1.2)
+      drop-shadow(0 0 18px rgba(255,215,120,1))
+      drop-shadow(0 0 38px rgba(255,255,255,0.9));
+  }
+}
+
+/* 🎅 */
+.santa {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  width: 130px;
+  animation: bounce 2s infinite;
+  z-index: 20;
+}
+
+@keyframes bounce {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* ❄️ TUYẾT */
+.snowflake {
+  position: fixed;
+  top: -10px;
+  color: white;
+  pointer-events: none;
+  animation: fall linear forwards;
+}
+
+@keyframes fall {
+  to { transform: translateY(105vh); }
+}
+</style>
+</head>
+
+<body>
+
+<button id="musicBtn">▶ Play Music</button>
+
+<div class="sleigh">
+  <img src="assets/sleigh.png" width="100%">
+</div>
+
+<div class="textBox">
+  <div id="line1"></div>
+  <div id="line2">YÊU EM 💖</div>
+</div>
+
+<!-- 🎄 CÂY THÔNG -->
+<div id="treeWrap">
+  <img src="assets/tree.png" class="tree-img" alt="Christmas Tree">
+
+  <div style="
+    font-family:'Great Vibes';
+    font-size:36px;
+    color:white;
+    margin-top:6px;
+    text-shadow:0 0 6px #000, 0 0 14px gold;">
+    Happy Holidays
+  </div>
+</div>
+
+<img class="santa" src="assets/santa.png">
+
+<audio id="music" loop>
+  <source src="assets/noel.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+/* 🎵 NHẠC */
+const music = document.getElementById("music");
+const musicBtn = document.getElementById("musicBtn");
+
+musicBtn.onclick = () => {
+  if (music.paused) {
+    music.play();
+    musicBtn.innerText = "⏸ Pause";
+  } else {
+    music.pause();
+    musicBtn.innerText = "▶ Play Music";
+  }
+};
+
+/* ✨ CHỮ CHẠY */
+const text = "Chúc em yêu Giáng Sinh an lành và ấm áp ❄️";
+const line1 = document.getElementById("line1");
+
+text.split("").forEach((c, i) => {
+  const span = document.createElement("span");
+  span.innerText = c;
+  span.style.animationDelay = i * 0.08 + "s";
+  line1.appendChild(span);
+});
+
+/* ❄️ TUYẾT */
+setInterval(() => {
+  const s = document.createElement("div");
+  s.className = "snowflake";
+  s.innerHTML = "❄";
+  s.style.left = Math.random() * innerWidth + "px";
+  s.style.fontSize = Math.random() * 12 + 10 + "px";
+  s.style.opacity = Math.random();
+  s.style.animationDuration = Math.random() * 3 + 3 + "s";
+  document.body.appendChild(s);
+  setTimeout(() => s.remove(), 6000);
+}, 160);
+</script>
+
+</body>
+</html>
